@@ -58,7 +58,6 @@ public class Runner : MonoBehaviour {
 		                   transform.localPosition.y, 
 		                   transform.localPosition.z);
 		renderer.enabled = false;
-		rigidbody.isKinematic = true;
 		enabled = false;
 
 		//runner is not initially invincible
@@ -76,7 +75,7 @@ public class Runner : MonoBehaviour {
 			GUIManager.SetInvincibility(0f);
 		}
 
-		//when spacebar is pressed do the following...
+		/*//when spacebar is pressed do the following...
 		if(Input.GetButtonDown("Jump")){
 
 			//add acceleration to runner on touching a platform
@@ -94,10 +93,10 @@ public class Runner : MonoBehaviour {
 			else if(boosts > 0 && !invincible){
 				rigidbody.AddForce(boostVelocity, ForceMode.VelocityChange);
 				boosts -= 1;
-				GUIManager.SetBoosts(boosts);
+				GUIManager.SetRapidFire(boosts);
 			}
 		
-		}
+		} */
 
 		//runner's distance from start
 		distanceTraveled = transform.localPosition.x;
@@ -108,7 +107,7 @@ public class Runner : MonoBehaviour {
 
 			//when invincible, respawn above platforms
 			if (invincible){
-				Respawn();
+		//keep going
 			} else { //otherwise, game is over
 				GameEventManager.TriggerGameOver();
 			}
@@ -124,18 +123,11 @@ public class Runner : MonoBehaviour {
 			invincible = false;
 		}
 
-		if(touchingPlatform){
-			rigidbody.AddForce(acceleration, 0f, 0f, ForceMode.Acceleration);
-		}
-
 		//A and D keys move runner backward and forward, horizontal movement
 		horizMovement = Input.GetAxis ("Horizontal");
 
 		//we factor in our horizontal movement factor and keyboard input
 		horizMovementVector = new Vector3 (horizMovement * horizMovementFactor, 0f, 0f);
-
-		//add in horizontal force on keypresses
-		rigidbody.AddForce (horizMovementVector * Time.deltaTime);
 
 		//check if our player has leveled up to vertical movement use
 		if (distanceTraveled > levelUpDistance) {
@@ -145,9 +137,6 @@ public class Runner : MonoBehaviour {
 
 			//we factor in our vertical movement factor and keyboard input
 			vertMovementVector = new Vector3 (0f, vertMovement * vertMovementFactor, 0f);
-
-			//add in vertical force on keypresses
-			rigidbody.AddForce (vertMovementVector * Time.deltaTime);
 		}
 	}
 
@@ -160,26 +149,24 @@ public class Runner : MonoBehaviour {
 	}
 
 	private void GameStart () {
-		boosts = 0;
-		GUIManager.SetBoosts(boosts);
+		//boosts = 0;
+		//GUIManager.SetBoosts(boosts);
 		distanceTraveled = 0f;
 		GUIManager.SetDistance(distanceTraveled);
 		transform.localPosition = startPosition;
 		renderer.enabled = true;
-		rigidbody.isKinematic = false;
 		enabled = true;
 	}
 	
 	private void GameOver () {
 		renderer.enabled = false;
-		rigidbody.isKinematic = true;
 		enabled = false;
 	}
-	
+	 /*
 	public static void AddBoost(){
 		boosts += 1;
 		GUIManager.SetBoosts(boosts);
-	}
+	} */
 
 	/*
 	 * Adds invincibility to runner, which is defined by respawning above platforms 
@@ -194,11 +181,4 @@ public class Runner : MonoBehaviour {
 		invincible = true;
 	}
 
-	/*
-	 * Respawns runner above platforms after runner drops to game over vertical position.
-	 * Used when runner is invincible.
-	 */
-	private void Respawn(){
-		rigidbody.transform.Translate (new Vector3 (0f, startPosition.y + 5f - transform.localPosition.y, 0f));
-	}
 }

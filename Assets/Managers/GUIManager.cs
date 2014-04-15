@@ -5,7 +5,7 @@ public class GUIManager : MonoBehaviour {
 	private static GUIManager instance;
 
 	//texts for various components of runner game
-	public GUIText boostsText, invText, distanceText, gameOverText, instructionsText, runnerText;
+	public GUIText rapidFireText, invText, scoreText, gameOverText, instructionsText, titleText;
 	
 	void Start () {
 		instance = this;
@@ -23,7 +23,7 @@ public class GUIManager : MonoBehaviour {
 	private void GameStart () {
 		gameOverText.enabled = false;
 		instructionsText.enabled = false;
-		runnerText.enabled = false;
+		titleText.enabled = false;
 		enabled = false;
 	}
 	
@@ -33,14 +33,14 @@ public class GUIManager : MonoBehaviour {
 		enabled = true;
 	}
 
-	//sets boosts text, counter
-	public static void SetBoosts(int boosts){
-		instance.boostsText.text = "Boosts: " + boosts.ToString();
+	//sets rapid fire text, timer
+	public static void SetRapidFire(float time){
+		instance.rapidFireText.text = "Rapid Fire Time: " + time.ToString("f0");
 	}
 
 	//sets distance text, counter
-	public static void SetDistance(float distance){
-		instance.distanceText.text = "Distance: " + distance.ToString("f0");
+	public static void SetDistance(float score){
+		instance.scoreText.text = "Score: " + score.ToString("f0");
 	}
 
 	//sets invincibility text, timer

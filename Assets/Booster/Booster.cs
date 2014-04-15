@@ -19,7 +19,7 @@ public class Booster : MonoBehaviour {
 	}
 	
 	void OnTriggerEnter () {
-		Runner.AddBoost();
+		//Runner.AddBoost();
 		gameObject.SetActive(false);
 	}
 
