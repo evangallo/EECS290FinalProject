@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/**
+ * Game controller for Cosmos Commander Final Project.
+ * Controls the game play and game modes of the game.
+ * 
+ * @authors EECS 290 Team 2
+ */
 public class Done_GameController : MonoBehaviour
 {
 	public GameObject[] hazards;
@@ -52,15 +58,16 @@ public class Done_GameController : MonoBehaviour
 				Quaternion spawnRotation = Quaternion.identity;
 				Instantiate (hazard, spawnPosition, spawnRotation);
 				yield return new WaitForSeconds (spawnWait);
+
+				if (gameOver)
+				{
+					restartText.text = "Press 'R' for Restart";
+					restart = true;
+					break;
+				}
 			}
+
 			yield return new WaitForSeconds (waveWait);
-			
-			if (gameOver)
-			{
-				restartText.text = "Press 'R' for Restart";
-				restart = true;
-				break;
-			}
 		}
 	}
 	

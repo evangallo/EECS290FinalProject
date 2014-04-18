@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/**
+ * Object destroyer on contact for Cosmos Commander Final Project.
+ * Destroys objects on contact for the game.
+ * 
+ * @authors EECS 290 Team 2
+ */
 public class Done_DestroyByContact : MonoBehaviour
 {
 	public GameObject explosion;

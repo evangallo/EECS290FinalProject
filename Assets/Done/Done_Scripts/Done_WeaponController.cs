@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/**
+ * Weapon controller for Cosmos Commander Final Project.
+ * Controls the weapons of the ships in the game.
+ * 
+ * @authors EECS 290 Team 2
+ */
 public class Done_WeaponController : MonoBehaviour
 {
 	public GameObject shot;

@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/**
+ * Background scroller for Cosmos Commander Final Project.
+ * Scrolls the background for the game.
+ * 
+ * @authors EECS 290 Team 2
+ */
 public class Done_BGScroller : MonoBehaviour
 {
 	public float scrollSpeed;

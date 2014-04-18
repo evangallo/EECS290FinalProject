@@ -7,6 +7,12 @@ public class Done_Boundary
 	public float xMin, xMax, zMin, zMax;
 }
 
+/**
+ * Player controller for Cosmos Commander Final Project.
+ * Controls the player in the game.
+ * 
+ * @authors EECS 290 Team 2
+ */
 public class Done_PlayerController : MonoBehaviour
 {
 	public float speed;

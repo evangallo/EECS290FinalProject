@@ -1,6 +1,12 @@
 using UnityEngine;
 using System.Collections;
 
+/**
+ * Evasive Maneuver Controller for Cosmos Commander Final Project.
+ * Controls the maneuvers of the enemies in the game.
+ * 
+ * @authors EECS 290 Team 2
+ */
 public class Done_EvasiveManeuver : MonoBehaviour
 {
 	public Done_Boundary boundary;
