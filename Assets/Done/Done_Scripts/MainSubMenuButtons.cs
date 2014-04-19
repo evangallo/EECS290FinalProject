@@ -15,7 +15,7 @@ public class MainSubMenuButtons : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+
 	}
 
 	/**
@@ -24,6 +24,9 @@ public class MainSubMenuButtons : MonoBehaviour {
 	void OnClick() {
 		//Selects which game mode to implement by tag.
 		switch(this.tag) {
+			case "Classic": //Load classic mode
+				Application.LoadLevel (2);
+				break;
 			case "Survival": //Load survival mode
 				Application.LoadLevel(3);
 				break;
@@ -33,8 +36,8 @@ public class MainSubMenuButtons : MonoBehaviour {
 			case "Challenge": //Load challenge mode
 				Application.LoadLevel (5);
 				break;
-			default: //Load classic mode by default
-				Application.LoadLevel (2);
+			default: //Load main menu by default
+				Application.LoadLevel (0);
 				break;
 		}
 	}

@@ -19,6 +19,7 @@ public class Done_GameController : MonoBehaviour
 	public GUIText scoreText;
 	public GUIText restartText;
 	public GUIText gameOverText;
+	public GUIText changeModeText;
 	
 	private bool gameOver;
 	private bool restart;
@@ -30,6 +31,7 @@ public class Done_GameController : MonoBehaviour
 		restart = false;
 		restartText.text = "";
 		gameOverText.text = "";
+		changeModeText.text = "";
 		score = 0;
 		UpdateScore ();
 		StartCoroutine (SpawnWaves ());
@@ -37,11 +39,18 @@ public class Done_GameController : MonoBehaviour
 	
 	void Update ()
 	{
+		if (Input.GetKeyDown (KeyCode.Escape))
+			Application.Quit ();
 		if (restart)
 		{
 			if (Input.GetKeyDown (KeyCode.R))
 			{
 				Application.LoadLevel (Application.loadedLevel);
+			}
+
+			if (Input.GetKeyDown (KeyCode.M)) //loads mode select menu
+			{
+				Application.LoadLevel (1);
 			}
 		}
 	}
@@ -63,6 +72,7 @@ public class Done_GameController : MonoBehaviour
 				{
 					restartText.text = "Press 'R' for Restart";
 					restart = true;
+					changeModeText.text = "Press 'M' for Mode Selection";
 					break;
 				}
 			}
