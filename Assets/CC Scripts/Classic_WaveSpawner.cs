@@ -37,9 +37,10 @@ public class Classic_WaveSpawner : MonoBehaviour
 	}
 
 	bool enemiesArePresent() {
-		if (GameObject.FindGameObjectsWithTag("Enemy").Equals(null)) {
+		int enemyCount = GameObject.FindGameObjectsWithTag ("Enemy").Length;
+		if (enemyCount < 1) {
 			return false;
 		}
-		return false;
+		return true;
 	}
 }
