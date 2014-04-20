@@ -15,6 +15,7 @@ public class EvasiveManeuver : MonoBehaviour
 	public float tilt;
 	public float dodge;
 	public float smoothing;
+	public float stopDelay;
 	public Vector2 startWait;
 	public Vector2 maneuverTime;
 	public Vector2 maneuverWait;
@@ -33,11 +34,11 @@ public class EvasiveManeuver : MonoBehaviour
 	 * determined by setting targetManeuver
 	 */
 	IEnumerator Evade () {
-		/*Transform incomingAsteroid = detectAsteroid();
-		if (incomingAsteroid != null){
+		Vector3 incomingAsteroid = detectAsteroid();
+		if (incomingAsteroid.magnitude != 0f){
 			if (detectObstacleLeft() && detectObstacleRight()) {
 					//Don't dodge
-			} else if (incomingAsteroid.position.x < Transform.position.x){
+			} else if (incomingAsteroid.x < rigidbody.position.x){
 			  	if (detectObstacleRight()){
 		  				//Dodge left
 				} else {
@@ -50,7 +51,7 @@ public class EvasiveManeuver : MonoBehaviour
 		  				//Dodge left
 			  	}
 			}
-		}*/
+		}
 
 		yield return new WaitForSeconds (Random.Range (startWait.x, startWait.y));
 		while (true)
@@ -65,7 +66,12 @@ public class EvasiveManeuver : MonoBehaviour
 	void FixedUpdate ()
 	{
 		float newManeuver = Mathf.MoveTowards (rigidbody.velocity.x, targetManeuver, smoothing * Time.deltaTime);
-		rigidbody.velocity = new Vector3 (newManeuver, 0.0f, currentSpeed);
+		if (stopDelay > 0) {
+			rigidbody.velocity = new Vector3 (newManeuver, 0.0f, currentSpeed);
+			stopDelay -= Time.deltaTime;
+		} else {
+			rigidbody.velocity = new Vector3 (newManeuver, 0.0f, 0f);
+		}
 		rigidbody.position = new Vector3
 		(
 			Mathf.Clamp(rigidbody.position.x, boundary.xMin, boundary.xMax), 
@@ -77,11 +83,12 @@ public class EvasiveManeuver : MonoBehaviour
 	}
 
 	/**
-	 * Detects if there is an asteroid behind the enemy and returns the asteroids transform
-	 * or null if there is no asteroid
+	 * Detects if there is an asteroid behind the enemy and returns the asteroid's 
+	 * position as a Vector3 or zero vector if there is no asteroid because apparently
+	 * Vector3s are non nullable
 	 */
-	Transform detectAsteroid() {
-		return null;
+	Vector3 detectAsteroid() {
+		return new Vector3 (0f, 0f, 0f);
 	}
 
 	/**
