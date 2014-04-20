@@ -2,8 +2,8 @@
 using System.Collections;
 
 /**
- * Game controller for Cosmos Commander Final Project.
- * Controls the game play and game modes of the game.
+ * Wave Spawner for Cosmos Commander Final Project.
+ * Spawns waves of enemies for each game mode of the game.
  * 
  * @authors EECS 290 Team 2
  */
