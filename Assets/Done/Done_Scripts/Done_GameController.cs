@@ -22,27 +22,30 @@ public class Done_GameController : MonoBehaviour
 	public GUIText changeModeText;
 	
 	private bool gameOver;
-	private bool restart;
 	private int score;
 	
 	void Start ()
 	{
 		gameOver = false;
-		restart = false;
 		restartText.text = "";
 		gameOverText.text = "";
 		changeModeText.text = "";
 		score = 0;
 		UpdateScore ();
-		StartCoroutine (SpawnWaves ());
+		if (hazards.Length > 0) //Do not spawn hazards if there are none.
+			StartCoroutine (SpawnWaves ());
 	}
 	
 	void Update ()
 	{
 		if (Input.GetKeyDown (KeyCode.Escape))
 			Application.Quit ();
-		if (restart)
+
+		if (gameOver)
 		{
+			restartText.text = "Press 'R' for Restart";
+			changeModeText.text = "Press 'M' for Mode Selection";
+
 			if (Input.GetKeyDown (KeyCode.R))
 			{
 				Application.LoadLevel (Application.loadedLevel);
@@ -68,13 +71,6 @@ public class Done_GameController : MonoBehaviour
 				Instantiate (hazard, spawnPosition, spawnRotation);
 				yield return new WaitForSeconds (spawnWait);
 
-				if (gameOver)
-				{
-					restartText.text = "Press 'R' for Restart";
-					restart = true;
-					changeModeText.text = "Press 'M' for Mode Selection";
-					break;
-				}
 			}
 
 			yield return new WaitForSeconds (waveWait);

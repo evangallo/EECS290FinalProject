@@ -33,11 +33,11 @@ if(changeCooldown>0){changeCooldown-=Time.deltaTime;}
 
 var ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 
-if (Physics.Raycast (ray, hit, 1000, layermask)) {
-moveThis.transform.position=hit.point;
+//if (Physics.Raycast (ray, hit, 1000, layermask)) {
+//moveThis.transform.position=hit.point;
 
 
-if(Input.GetMouseButton(0)&&cooldown<=0){
+if(Input.GetKeyDown(KeyCode.Space) &&cooldown<=0){
 effect=Instantiate(createThis[selected], spaceShip.transform.position, spaceShip.transform.rotation);
 effect.transform.parent=spaceShip.transform;
 
@@ -46,7 +46,7 @@ cooldown=0.5;
 
 
 
-}
+//}
 
 
 if (Input.GetKeyDown(KeyCode.UpArrow) && changeCooldown<=0)
@@ -67,7 +67,7 @@ if (Input.GetKeyDown(KeyCode.DownArrow) && changeCooldown<=0)
 	changeCooldown=0.1;
 }
 
-if (Input.GetKeyDown(KeyCode.Space) && changeCooldown<=0)
+if (Input.GetKeyDown(KeyCode.C) && changeCooldown<=0)
 {
 if (camCurrent==1)
 {

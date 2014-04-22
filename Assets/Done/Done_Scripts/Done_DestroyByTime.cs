@@ -2,7 +2,7 @@
 using System.Collections;
 
 /**
- * Objecy destroyer for Cosmos Commander Final Project.
+ * Object destroyer for Cosmos Commander Final Project.
  * Destroys objects by given time in the game.
  * 
  * @authors EECS 290 Team 2
