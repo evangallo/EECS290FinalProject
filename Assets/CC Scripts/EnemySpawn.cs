@@ -18,7 +18,7 @@ public class EnemySpawn : MonoBehaviour
 	public float spawnWaitDecrement;
 	public int hazardCount;
 	public GameObject[] enemyWaves;
-	public float currentWait;
+	private float currentWait;
 	
 	void Start ()
 	{
@@ -34,11 +34,11 @@ public class EnemySpawn : MonoBehaviour
 			break;
 
 			case "time attack":
-			StartCoroutine (SpawnTimeAttackWaves ());
+			StartCoroutine (SpawnClassicWaves ());
 			break;
 
 			case "challenge":
-			StartCoroutine (SpawnChallengeWaves ());
+			StartCoroutine (SpawnClassicWaves ());
 			break;
 		}
 	}
@@ -89,56 +89,6 @@ public class EnemySpawn : MonoBehaviour
 			}
 			
 			//yield return new WaitForSeconds (waveWait);
-		}
-	}
-
-	/**
-	 * Spawn the enemy waves for time attack game mode.
-	 */
-	IEnumerator SpawnTimeAttackWaves ()
-	{
-		yield return new WaitForSeconds (startWait);
-		
-		while (true) 
-		{
-			for (int i = 0; i < enemyWaves.Length; i++)
-			{
-				GameObject enemyWave = enemyWaves [i];
-				Vector3 spawnPosition = new Vector3 (0f, spawnValues.y, spawnValues.z);
-				Quaternion spawnRotation = Quaternion.identity;
-				Instantiate (enemyWave, spawnPosition, spawnRotation);
-				while (enemiesArePresent()) 
-				{
-					yield return new WaitForSeconds (spawnWait);
-				}
-			}
-			
-			yield return new WaitForSeconds (waveWait);
-		}
-	}
-
-	/**
-	 * Spawn the enemy waves for challenge game mode.
-	 */
-	IEnumerator SpawnChallengeWaves ()
-	{
-		yield return new WaitForSeconds (startWait);
-		
-		while (true) 
-		{
-			for (int i = 0; i < enemyWaves.Length; i++)
-			{
-				GameObject enemyWave = enemyWaves [i];
-				Vector3 spawnPosition = new Vector3 (0f, spawnValues.y, spawnValues.z);
-				Quaternion spawnRotation = Quaternion.identity;
-				Instantiate (enemyWave, spawnPosition, spawnRotation);
-				while (enemiesArePresent()) 
-				{
-					yield return new WaitForSeconds (spawnWait);
-				}
-			}
-			
-			yield return new WaitForSeconds (waveWait);
 		}
 	}
 
