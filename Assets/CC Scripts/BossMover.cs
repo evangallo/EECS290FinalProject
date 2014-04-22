@@ -12,14 +12,12 @@ using System.Collections;
 public class BossMover : MonoBehaviour
 {
 	public Done_Boundary boundary;
-	public float xRange;
 	public float tilt;
 	public float dodge;
 	public float smoothing;
 	public float stopDelay;
-	public Vector2 startWait;
-	public Vector2 maneuverTime;
-	public Vector2 maneuverWait;
+	public float maneuverTime;
+	public float maneuverWait;
 
 	private float currentSpeed;
 	private float targetManeuver;
@@ -37,12 +35,21 @@ public class BossMover : MonoBehaviour
 	 */
 	IEnumerator Move () {
 		yield return new WaitForSeconds (stopDelay);
-		targetManeuver = xRange;
+		targetManeuver = dodge;
+		yield return new WaitForSeconds (maneuverTime/2);
+		bool left = true;
 		while (true) {
-			if (transform.position.x > xRange) {
-				targetManeuver = -xRange;
-			} else if (transform.position.x < -xRange) {
-				targetManeuver = xRange;
+			targetManeuver = 0;
+			yield return new WaitForSeconds (maneuverWait);
+
+			if (left) {
+				targetManeuver = -dodge;
+				yield return new WaitForSeconds (maneuverTime);
+				left = false;
+			} else {
+				targetManeuver = dodge;
+				yield return new WaitForSeconds (maneuverTime);
+				left = true;
 			}
 		}
 	}
