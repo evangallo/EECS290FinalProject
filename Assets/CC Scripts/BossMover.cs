@@ -14,6 +14,7 @@ public class BossMover : MonoBehaviour
 	public Done_Boundary boundary;
 	public float tilt;
 	public float speed;
+	public float rotationSpeed;
 	public float smoothing;
 	public float stopDelay;
 	public float maneuverTime;
@@ -21,6 +22,7 @@ public class BossMover : MonoBehaviour
 
 	private float currentSpeed;
 	private float targetManeuver;
+	private float targetRotation;
 
 	void Start ()
 	{
@@ -54,9 +56,17 @@ public class BossMover : MonoBehaviour
 		}
 	}
 
-	/*IEnumerator Aim () {
-		
-	}*/
+	/**
+	 * Aims the boss at the player
+	 */
+	IEnumerator Aim () {
+		yield return new WaitForSeconds (stopDelay);
+		GameObject player = GameObject.FindGameObjectWithTag ("Player");
+		while (true) {
+			targetRotation = Vector3.Angle(player.transform.position - transform.position, 
+			                               transform.forward);
+		}
+	}
 	
 	void FixedUpdate ()
 	{
@@ -73,8 +83,12 @@ public class BossMover : MonoBehaviour
 			0.0f, 
 			Mathf.Clamp(rigidbody.position.z, boundary.zMin, boundary.zMax)
 		);
-		
-		rigidbody.rotation = Quaternion.Euler (0, 0, rigidbody.velocity.x * -tilt);
+
+		float newRotation = Mathf.MoveTowardsAngle (transform.eulerAngles.y, targetRotation, 
+		                                            rotationSpeed * Time.deltaTime);
+		//Mathf.LerpAngle(rigidbody.rotation.y, targetRotation, Time.deltaTime)
+		rigidbody.rotation = Quaternion.Euler (0, rigidbody.rotation.y, 
+		                                       rigidbody.velocity.x * -tilt);
 	}
 	
 }
