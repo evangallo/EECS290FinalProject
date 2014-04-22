@@ -43,7 +43,7 @@ public class ExplosionControl : MonoBehaviour
 				Instantiate(explosion, transform.position, transform.rotation);
 			if (enemyExplosion != null)
 				Instantiate(enemyExplosion, other.transform.position, other.transform.rotation);
-			gameController.AddScore(scoreValue);
+			//gameController.AddScore(scoreValue);
 			//gameController.GameOver();
 		}
 

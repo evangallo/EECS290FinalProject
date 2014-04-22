@@ -33,6 +33,10 @@ public class Done_PlayerController : MonoBehaviour
 			Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
 			audio.Play ();
 		}
+        if (Input.GetButton("Fire2"))
+        {
+            Detonate();
+        }
 	}
 
 	void FixedUpdate ()
@@ -52,4 +56,17 @@ public class Done_PlayerController : MonoBehaviour
 		
 		rigidbody.rotation = Quaternion.Euler (0.0f, 0.0f, rigidbody.velocity.x * -tilt);
 	}
+    void Detonate()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject victim in enemies)
+        {
+            victim.BroadcastMessage("Damage");
+        }
+        enemies = GameObject.FindGameObjectsWithTag("Hazard");
+        foreach (GameObject victim in enemies)
+        {
+            victim.BroadcastMessage("Damage");
+        }
+    }
 }
