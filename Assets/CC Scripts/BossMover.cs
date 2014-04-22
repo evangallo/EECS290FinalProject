@@ -13,7 +13,7 @@ public class BossMover : MonoBehaviour
 {
 	public Done_Boundary boundary;
 	public float tilt;
-	public float dodge;
+	public float speed;
 	public float smoothing;
 	public float stopDelay;
 	public float maneuverTime;
@@ -35,7 +35,7 @@ public class BossMover : MonoBehaviour
 	 */
 	IEnumerator Move () {
 		yield return new WaitForSeconds (stopDelay);
-		targetManeuver = dodge;
+		targetManeuver = speed;
 		yield return new WaitForSeconds (maneuverTime/2);
 		bool left = true;
 		while (true) {
@@ -43,11 +43,11 @@ public class BossMover : MonoBehaviour
 			yield return new WaitForSeconds (maneuverWait);
 
 			if (left) {
-				targetManeuver = -dodge;
+				targetManeuver = -speed;
 				yield return new WaitForSeconds (maneuverTime);
 				left = false;
 			} else {
-				targetManeuver = dodge;
+				targetManeuver = speed;
 				yield return new WaitForSeconds (maneuverTime);
 				left = true;
 			}
