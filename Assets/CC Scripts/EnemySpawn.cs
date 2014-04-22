@@ -19,12 +19,23 @@ public class EnemySpawn : MonoBehaviour
 	public int hazardCount;
 	public GameObject[] enemyWaves;
 	private float currentWait;
+	private Done_GameController gameController;
+	private bool fullCount;
 	
 	void Start ()
 	{
+		GameObject gameControllerObject = GameObject.FindGameObjectWithTag ("GameController");
+
+		if (gameControllerObject != null)
+		{
+			gameController = gameControllerObject.GetComponent <Done_GameController>();
+		}
+
 		switch (gameMode) //select game mode coroutine
 		{
 			case "classic":
+			fullCount = false;
+			hazardCount = hazardCount / 2;
 			StartCoroutine (SpawnClassicWaves ());
 			break;
 
@@ -52,6 +63,12 @@ public class EnemySpawn : MonoBehaviour
 		
 		while (true) 
 		{
+			//Release the most enemies after user gained large score
+			if (gameController.GetScore () > 500 && !fullCount){
+				hazardCount = hazardCount * 2;
+				fullCount = true;
+			}
+
 			for (int i = 0; i < hazardCount; i++)
 			{
 				GameObject hazard = enemyWaves [Random.Range (0, enemyWaves.Length)];

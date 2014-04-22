@@ -82,6 +82,11 @@ public class Done_GameController : MonoBehaviour
 		score += newScoreValue;
 		UpdateScore ();
 	}
+
+	public int GetScore ()
+	{
+		return score;
+	}
 	
 	void UpdateScore ()
 	{
