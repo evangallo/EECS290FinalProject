@@ -11,16 +11,16 @@ public class EnemySpawn : MonoBehaviour
 {
 	public string gameMode; // classic, survival, time attack or challenge
 	public Vector3 spawnValues;
-	public float spawnWait;
+	public float spawnCheckWait;
 	public float startWait;
 	public float waveWait;
 	public float maxSpawnWait, minSpawnWait;
 	public float spawnWaitDecrement;
-	public int hazardCount;
+	//public int hazardCount;
 	public GameObject[] enemyWaves;
 	private float currentWait;
 	private Done_GameController gameController;
-	private bool fullCount;
+	//private bool fullCount;
 	
 	void Start ()
 	{
@@ -34,8 +34,8 @@ public class EnemySpawn : MonoBehaviour
 		switch (gameMode) //select game mode coroutine
 		{
 			case "classic":
-			fullCount = false;
-			hazardCount = hazardCount / 2;
+			//fullCount = false;
+			//hazardCount = hazardCount / 2;
 			StartCoroutine (SpawnClassicWaves ());
 			break;
 
@@ -60,25 +60,24 @@ public class EnemySpawn : MonoBehaviour
 	IEnumerator SpawnClassicWaves ()
 	{
 		yield return new WaitForSeconds (startWait);
-		
-		while (true) 
-		{
+
 			//Release the most enemies after user gained large score
-			if (gameController.GetScore () > 500 && !fullCount){
+			/*if (gameController.GetScore () > 500 && !fullCount){
 				hazardCount = hazardCount * 2;
 				fullCount = true;
-			}
+			}*/
 
-			for (int i = 0; i < hazardCount; i++)
-			{
-				GameObject hazard = enemyWaves [Random.Range (0, enemyWaves.Length)];
-				Vector3 spawnPosition = new Vector3 (Random.Range (-spawnValues.x, spawnValues.x), spawnValues.y, spawnValues.z);
-				Quaternion spawnRotation = Quaternion.identity;
-				Instantiate (hazard, spawnPosition, spawnRotation);
-				yield return new WaitForSeconds (spawnWait);
-			}
+		for (int i = 0; i < enemyWaves.Length; i++)
+		{
+			GameObject enemyWave = enemyWaves [i];
+			Vector3 spawnPosition = new Vector3 (0f, spawnValues.y, spawnValues.z);
+			Quaternion spawnRotation = Quaternion.identity;
+			Instantiate (enemyWave, spawnPosition, spawnRotation);
 
-			yield return new WaitForSeconds (Random.Range (0, waveWait));
+			//while (enemiesArePresent())
+				//yield return new WaitForSeconds (spawnCheckWait);
+
+			yield return new WaitForSeconds (waveWait);
 		}
 	}
 
@@ -104,7 +103,7 @@ public class EnemySpawn : MonoBehaviour
 					currentWait = minSpawnWait;
 				}
 			}
-			
+	
 			//yield return new WaitForSeconds (waveWait);
 		}
 	}
