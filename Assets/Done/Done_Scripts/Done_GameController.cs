@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/**
+ * Game controller for Cosmos Commander Final Project.
+ * Controls the game play and game modes of the game.
+ * 
+ * @authors EECS 290 Team 2
+ */
 public class Done_GameController : MonoBehaviour
 {
 	public GameObject[] hazards;
@@ -13,29 +19,41 @@ public class Done_GameController : MonoBehaviour
 	public GUIText scoreText;
 	public GUIText restartText;
 	public GUIText gameOverText;
+	public GUIText changeModeText;
 	
 	private bool gameOver;
-	private bool restart;
 	private int score;
 	
 	void Start ()
 	{
 		gameOver = false;
-		restart = false;
 		restartText.text = "";
 		gameOverText.text = "";
+		changeModeText.text = "";
 		score = 0;
 		UpdateScore ();
-		StartCoroutine (SpawnWaves ());
+		if (hazards.Length > 0) //Do not spawn hazards if there are none.
+			StartCoroutine (SpawnWaves ());
 	}
 	
 	void Update ()
 	{
-		if (restart)
+		if (Input.GetKeyDown (KeyCode.Escape))
+			Application.Quit ();
+
+		if (gameOver)
 		{
+			restartText.text = "Press 'R' for Restart";
+			changeModeText.text = "Press 'M' for Mode Selection";
+
 			if (Input.GetKeyDown (KeyCode.R))
 			{
 				Application.LoadLevel (Application.loadedLevel);
+			}
+
+			if (Input.GetKeyDown (KeyCode.M)) //loads mode select menu
+			{
+				Application.LoadLevel (1);
 			}
 		}
 	}
@@ -52,15 +70,10 @@ public class Done_GameController : MonoBehaviour
 				Quaternion spawnRotation = Quaternion.identity;
 				Instantiate (hazard, spawnPosition, spawnRotation);
 				yield return new WaitForSeconds (spawnWait);
+
 			}
+
 			yield return new WaitForSeconds (waveWait);
-			
-			if (gameOver)
-			{
-				restartText.text = "Press 'R' for Restart";
-				restart = true;
-				break;
-			}
 		}
 	}
 	
