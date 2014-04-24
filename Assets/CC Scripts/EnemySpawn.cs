@@ -63,13 +63,18 @@ public class EnemySpawn : MonoBehaviour
 
 		for (int i = 0; i < enemyWaves.Length; i++)
 		{
+			if (gameMode == "time attack")
+				gameController.beginTimer();
+
 			GameObject enemyWave = enemyWaves [i];
 			Vector3 spawnPosition = new Vector3 (0f, spawnValues.y, spawnValues.z);
 			Quaternion spawnRotation = Quaternion.identity;
 			Instantiate (enemyWave, spawnPosition, spawnRotation);
 
-			//while (enemiesArePresent())
-				//yield return new WaitForSeconds (spawnCheckWait);
+			while (enemiesArePresent())
+				yield return new WaitForSeconds (spawnCheckWait);
+
+			gameController.EndTimer ();
 
 			yield return new WaitForSeconds (waveWait);
 		}
