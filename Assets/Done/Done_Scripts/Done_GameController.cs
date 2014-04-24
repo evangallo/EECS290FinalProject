@@ -39,8 +39,6 @@ public class Done_GameController : MonoBehaviour
 		timerText.text = "";
 		score = 0;
 		UpdateScore ();
-		if(gameMode == "time attack") //start timer if time attack mode
-			beginTimer();
 		if (hazards.Length > 0) //Do not spawn hazards if there are none.
 			StartCoroutine (SpawnWaves ());
 
@@ -85,7 +83,7 @@ public class Done_GameController : MonoBehaviour
 		}
 	}
 
-	void beginTimer()
+	public void beginTimer()
 	{
 		timer = 0;
 		isTiming = true;
@@ -108,7 +106,7 @@ public class Done_GameController : MonoBehaviour
 		
 	} */
 	
-	void EndTimer(){
+	public void EndTimer(){
 		isTiming = false;
 	}
 	
