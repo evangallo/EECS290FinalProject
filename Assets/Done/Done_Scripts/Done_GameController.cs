@@ -98,4 +98,9 @@ public class Done_GameController : MonoBehaviour
 		gameOverText.text = "Game Over!";
 		gameOver = true;
 	}
+    public void Victory()
+    {
+        gameOverText.text = "Player Wins!";
+        gameOver = true;
+    }
 }

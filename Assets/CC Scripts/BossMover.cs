@@ -28,7 +28,7 @@ public class BossMover : MonoBehaviour
 	{
 		currentSpeed = rigidbody.velocity.z;
 		StartCoroutine(Move());
-		//StartCoroutine (Aim());
+		StartCoroutine (Aim());
 	}
 
 	/**
@@ -65,6 +65,7 @@ public class BossMover : MonoBehaviour
 		while (true) {
 			targetRotation = Vector3.Angle(player.transform.position - transform.position, 
 			                               transform.forward);
+            yield return new WaitForSeconds(maneuverTime);
 		}
 	}
 	
