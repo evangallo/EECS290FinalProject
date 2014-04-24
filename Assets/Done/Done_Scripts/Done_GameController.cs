@@ -136,22 +136,42 @@ public class Done_GameController : MonoBehaviour
 		switch (gameMode) //select game mode scoring scheme
 		{
 		case "classic":
-			if (objectType == "enemy")
-				score += 4;
+			if (objectType == "enemyShip")
+				score += 20;
+			if (objectType == "asteroid")
+				score += 10;
+			if (objectType == "boss") 
+				score += 50;
 			break;
 			
 		case "survival":
-
+			if (objectType == "enemyShip")
+				score += 20;
+			if (objectType == "asteroid")
+				score += 10;
+			if (objectType == "boss") 
+				score += 50;
 			break;
 			
 		case "time attack":
-
+			if (objectType == "enemyShip")
+				score += (int)(20f / timer) + 20;
+			if (objectType == "asteroid")
+				score += (int)(10f / timer) + 10;
+			if (objectType == "boss") 
+				score += (int)(50f / timer) + 50;
 			break;
 			
 		case "challenge":
-
+			if (objectType == "enemyShip")
+				score += 10;
+			if (objectType == "asteroid")
+				score += 5;
+			if (objectType == "boss") 
+				score += 50;
 			break;
 		}
+
 		UpdateScore ();
 	}
 
@@ -162,7 +182,7 @@ public class Done_GameController : MonoBehaviour
 
 	void UpdateTimer()
 	{
-		timerText.text = "Time: " + timer;
+		timerText.text = "Time: " + (int)timer;
 	}
 	
 	void UpdateScore ()

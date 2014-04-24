@@ -61,12 +61,6 @@ public class EnemySpawn : MonoBehaviour
 	{
 		yield return new WaitForSeconds (startWait);
 
-			//Release the most enemies after user gained large score
-			/*if (gameController.GetScore () > 500 && !fullCount){
-				hazardCount = hazardCount * 2;
-				fullCount = true;
-			}*/
-
 		for (int i = 0; i < enemyWaves.Length; i++)
 		{
 			GameObject enemyWave = enemyWaves [i];
