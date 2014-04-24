@@ -11,16 +11,18 @@ public class Done_DestroyByContact : MonoBehaviour
 {
 	public GameObject explosion;
 	public GameObject playerExplosion;
-	public int scoreValue;
+	public string objectType = "enemyShip"; //default to enemy ship
 	private Done_GameController gameController;
 
 	void Start ()
 	{
 		GameObject gameControllerObject = GameObject.FindGameObjectWithTag ("GameController");
+
 		if (gameControllerObject != null)
 		{
 			gameController = gameControllerObject.GetComponent <Done_GameController>();
 		}
+
 		if (gameController == null)
 		{
 			Debug.Log ("Cannot find 'GameController' script");
@@ -50,10 +52,10 @@ public class Done_DestroyByContact : MonoBehaviour
         {
             Instantiate(explosion, transform.position, transform.rotation);
         }
-        if (scoreValue != null)
-        {
-            gameController.AddScore(scoreValue);
-        }
+        
+		gameController.AddScore (objectType);
+
         Destroy(gameObject);
     }
+
 }

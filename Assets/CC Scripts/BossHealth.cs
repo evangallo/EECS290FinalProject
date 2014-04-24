@@ -4,7 +4,6 @@ using System.Collections;
 public class BossHealth : MonoBehaviour {
 	public GameObject explosion;
 	public GameObject playerExplosion;
-	public int scoreValue;
     private int HP;
 	private Done_GameController gameController;
 
@@ -54,10 +53,8 @@ public class BossHealth : MonoBehaviour {
         {
             Instantiate(explosion, transform.position, transform.rotation);
         }
-        if (scoreValue != null)
-        {
-            gameController.AddScore(scoreValue);
-        }
+
+        gameController.AddScore("boss");
         gameController.Victory();
         Destroy(gameObject);
     }

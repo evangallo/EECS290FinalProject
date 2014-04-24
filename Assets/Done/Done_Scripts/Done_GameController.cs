@@ -9,6 +9,7 @@ using System.Collections;
  */
 public class Done_GameController : MonoBehaviour
 {
+	public string gameMode;
 	public GameObject[] hazards;
 	public Vector3 spawnValues;
 	public int hazardCount;
@@ -23,6 +24,7 @@ public class Done_GameController : MonoBehaviour
 	
 	private bool gameOver;
 	private int score;
+	private Done_GameController gameController;
 	
 	void Start ()
 	{
@@ -34,6 +36,16 @@ public class Done_GameController : MonoBehaviour
 		UpdateScore ();
 		if (hazards.Length > 0) //Do not spawn hazards if there are none.
 			StartCoroutine (SpawnWaves ());
+
+		GameObject gameControllerObject = GameObject.FindGameObjectWithTag ("GameController");
+		if (gameControllerObject != null)
+		{
+			gameController = gameControllerObject.GetComponent <Done_GameController>();
+		}
+		if (gameController == null)
+		{
+			Debug.Log ("Cannot find 'GameController' script");
+		}
 	}
 	
 	void Update ()
@@ -77,9 +89,27 @@ public class Done_GameController : MonoBehaviour
 		}
 	}
 	
-	public void AddScore (int newScoreValue)
+	public void AddScore (string objectType)
 	{
-		score += newScoreValue;
+		switch (gameMode) //select game mode scoring scheme
+		{
+		case "classic":
+			if (objectType == "enemy")
+				score += 4;
+			break;
+			
+		case "survival":
+
+			break;
+			
+		case "time attack":
+
+			break;
+			
+		case "challenge":
+
+			break;
+		}
 		UpdateScore ();
 	}
 
@@ -98,6 +128,7 @@ public class Done_GameController : MonoBehaviour
 		gameOverText.text = "Game Over!";
 		gameOver = true;
 	}
+
     public void Victory()
     {
         gameOverText.text = "Player Wins!";
