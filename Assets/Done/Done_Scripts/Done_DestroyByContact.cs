@@ -50,7 +50,10 @@ public class Done_DestroyByContact : MonoBehaviour
         {
             Instantiate(explosion, transform.position, transform.rotation);
         }
-        gameController.AddScore(scoreValue);
+        if (scoreValue != null)
+        {
+            gameController.AddScore(scoreValue);
+        }
         Destroy(gameObject);
     }
 }

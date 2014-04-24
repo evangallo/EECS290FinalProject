@@ -61,12 +61,12 @@ public class Done_PlayerController : MonoBehaviour
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         foreach (GameObject victim in enemies)
         {
-            victim.BroadcastMessage("Damage");
+            victim.BroadcastMessage("Damage", SendMessageOptions.DontRequireReceiver);
         }
         enemies = GameObject.FindGameObjectsWithTag("Hazard");
         foreach (GameObject victim in enemies)
         {
-            victim.BroadcastMessage("Damage");
+            victim.BroadcastMessage("Damage", SendMessageOptions.DontRequireReceiver);
         }
     }
 }

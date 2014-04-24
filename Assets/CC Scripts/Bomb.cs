@@ -12,12 +12,5 @@ public class Bomb : MonoBehaviour {
 	void Update () {
 	
 	}
-    void Detonate()
-    {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        foreach(GameObject victim in enemies)
-        {
-            victim.BroadcastMessage("Damage");
-        }
-    }
+    
 }
