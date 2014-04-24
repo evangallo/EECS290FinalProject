@@ -56,7 +56,7 @@ public class EvasiveManeuver : MonoBehaviour
 		yield return new WaitForSeconds (Random.Range (startWait.x, startWait.y));
 		while (true)
 		{
-			targetManeuver = Random.Range (1, dodge) * -Mathf.Sign (transform.position.x);
+			targetManeuver = Random.Range (1, dodge) * Mathf.Sign (Random.Range(-1, 1));
 			yield return new WaitForSeconds (Random.Range (maneuverTime.x, maneuverTime.y));
 			targetManeuver = 0;
 			yield return new WaitForSeconds (Random.Range (maneuverWait.x, maneuverWait.y));
