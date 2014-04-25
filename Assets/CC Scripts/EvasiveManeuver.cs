@@ -16,12 +16,13 @@ public class EvasiveManeuver : MonoBehaviour
 	public float dodge;
 	public float smoothing;
 	public float stopDelay;
-	public Vector2 startWait;
+	public float detectionRange;
 	public Vector2 maneuverTime;
 	public Vector2 maneuverWait;
 
 	private float currentSpeed;
 	private float targetManeuver;
+	private Transform threat;
 
 	void Start ()
 	{
@@ -34,38 +35,30 @@ public class EvasiveManeuver : MonoBehaviour
 	 * determined by setting targetManeuver
 	 */
 	IEnumerator Evade () {
-		Vector3 incomingAsteroid = detectAsteroid();
-		if (incomingAsteroid.magnitude != 0f){
-			if (detectObstacleLeft() && detectObstacleRight()) {
-					//Don't dodge
-			} else if (incomingAsteroid.x < rigidbody.position.x){
-			  	if (detectObstacleRight()){
-		  				//Dodge left
-				} else {
-		  				//Dodge right
-				}
-			} else {
-			  	if (detectObstacleLeft()){
-		  				//Dodge right
-				} else {
-		  				//Dodge left
-			  	}
-			}
-		}
 
-		yield return new WaitForSeconds (Random.Range (startWait.x, startWait.y));
+
 		while (true)
 		{
+			yield return new WaitForSeconds (Random.Range (maneuverWait.x, maneuverWait.y));
 			targetManeuver = Random.Range (1, dodge) * Mathf.Sign (Random.Range(-1, 1));
 			yield return new WaitForSeconds (Random.Range (maneuverTime.x, maneuverTime.y));
 			targetManeuver = 0;
-			yield return new WaitForSeconds (Random.Range (maneuverWait.x, maneuverWait.y));
 		}
+	}
+
+	void Update () {
+		threat = detectNearestThreat ();
 	}
 	
 	void FixedUpdate ()
 	{
-		float newManeuver = Mathf.MoveTowards (rigidbody.velocity.x, targetManeuver, smoothing * Time.deltaTime);
+		float newManeuver = 0f;
+		if (threat == null) {
+			newManeuver = Mathf.MoveTowards (rigidbody.velocity.x, targetManeuver, smoothing * Time.deltaTime);
+		} else {
+			float evasiveManeuver = dodge * Mathf.Sign(transform.position.x - threat.transform.position.x);
+			newManeuver = Mathf.MoveTowards (rigidbody.velocity.x, evasiveManeuver, smoothing * Time.deltaTime);
+		}
 		if (stopDelay > 0) {
 			rigidbody.velocity = new Vector3 (newManeuver, 0.0f, currentSpeed);
 			stopDelay -= Time.deltaTime;
@@ -83,25 +76,36 @@ public class EvasiveManeuver : MonoBehaviour
 	}
 
 	/**
-	 * Detects if there is an asteroid behind the enemy and returns the asteroid's 
-	 * position as a Vector3 or zero vector if there is no asteroid because apparently
-	 * Vector3s are non nullable
+	 * Detects nearest object with player or hazard tag and returns its transform
 	 */
-	Vector3 detectAsteroid() {
-		return new Vector3 (0f, 0f, 0f);
-	}
+	Transform detectNearestThreat () {
+		GameObject[] playerObjects = GameObject.FindGameObjectsWithTag ("Player");
+		GameObject[] hazards = GameObject.FindGameObjectsWithTag ("Hazard");
+		float distance = Mathf.Infinity;
+		GameObject nearestThreat = null;
 
-	/**
-	 * Detect if there is an asteroid or another enemy to this enemy's left
-	 */
-	bool detectObstacleLeft() {
-		return false;
-	}
+		foreach (GameObject playerObject in playerObjects) {
+			float difference = Vector3.Magnitude(transform.position - playerObject.transform.position);
+			if (difference < distance) {
+				distance = difference;
+				nearestThreat = playerObject;
+			}
+		}
 
-	/**
-	 * Detect if there is an asteroid or another enemy to this enemy's right
-	 */
-	bool detectObstacleRight() {
-		return false;
+		foreach (GameObject hazard in hazards) {
+			float difference = Vector3.Magnitude(transform.position - hazard.transform.position);
+			if (difference < distance) {
+				distance = difference;
+				nearestThreat = hazard;
+			}
+		}
+
+		Debug.Log (nearestThreat.tag);
+
+		if (distance < detectionRange) {
+			return nearestThreat.transform;
+		} else {
+			return null;
+		}
 	}
 }
