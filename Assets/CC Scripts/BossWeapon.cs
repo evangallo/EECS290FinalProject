@@ -13,6 +13,7 @@ public class BossWeapon : MonoBehaviour
 	public GameObject beam;
 	public Transform beamSpawn;
 	public int shots;
+	// The lifetimes of lightning beam and tractor beam need to be adjusted from their respective scripts.
 	public float chargeTime, beamTime, waitTime;
 	public float delay;
 
@@ -26,12 +27,12 @@ public class BossWeapon : MonoBehaviour
 		yield return new WaitForSeconds (delay);
 		while (true) {
 			audio.Play ();
-			Instantiate (chargeEffect, beamSpawn.position, beamSpawn.rotation);
-			chargeEffect.transform.parent = transform;
+			GameObject chargeClone = Instantiate (chargeEffect, beamSpawn.position, beamSpawn.rotation) as GameObject;
+			chargeClone.transform.parent = transform;
 			yield return new WaitForSeconds (chargeTime);
 			for (int i = 0; i < shots; i++) {
-				Instantiate (beam, beamSpawn.position, beamSpawn.rotation);
-				beam.transform.parent = transform;
+				GameObject beamClone = Instantiate (beam, beamSpawn.position, beamSpawn.rotation) as GameObject;
+				beamClone.transform.parent = transform;
 				yield return new WaitForSeconds (beamTime/shots);
 			}
 			yield return new WaitForSeconds (waitTime);
