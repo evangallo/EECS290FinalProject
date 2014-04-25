@@ -78,6 +78,8 @@ public class EnemySpawn : MonoBehaviour
 
 			yield return new WaitForSeconds (waveWait);
 		}
+		gameController.Victory();
+
 	}
 
 	/**

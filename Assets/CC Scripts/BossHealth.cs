@@ -55,7 +55,6 @@ public class BossHealth : MonoBehaviour {
         }
 
         gameController.AddScore("boss");
-        gameController.Victory();
         Destroy(gameObject);
     }
 }
