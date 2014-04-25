@@ -60,7 +60,7 @@ public class BossMover : MonoBehaviour
 		GameObject player = GameObject.FindGameObjectWithTag ("Player");
 		if (stopDelay <= 0) {
 			target = player.transform.position - transform.position;
-			Debug.Log(target);
+			//Debug.Log(target);
 		}
 	}
 	
@@ -80,10 +80,10 @@ public class BossMover : MonoBehaviour
 			Mathf.Clamp(rigidbody.position.z, boundary.zMin, boundary.zMax)
 		);
 
-		Vector3 newRotation = Vector3.RotateTowards (-transform.forward, target, 
-		                                            rotationSpeed * Time.deltaTime, 0.0f);
-		Debug.Log(newRotation);
-		transform.rotation = Quaternion.LookRotation (-target);
+		Vector3 newRotation = Vector3.Slerp (-transform.forward, target, rotationSpeed * Time.deltaTime);
+		//Debug.Log(newRotation);
+		transform.rotation = Quaternion.LookRotation (-newRotation);
+		//rigidbody.rotation = Quaternion.Euler (0, rigidbody.rotation.y, rigidbody.velocity.x * -tilt);
 	}
 	
 }
