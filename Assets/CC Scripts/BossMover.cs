@@ -22,13 +22,12 @@ public class BossMover : MonoBehaviour
 
 	private float currentSpeed;
 	private float targetManeuver;
-	private float targetRotation;
+	private Vector3 target;
 
 	void Start ()
 	{
 		currentSpeed = rigidbody.velocity.z;
 		StartCoroutine(Move());
-		StartCoroutine (Aim());
 	}
 
 	/**
@@ -56,16 +55,12 @@ public class BossMover : MonoBehaviour
 		}
 	}
 
-	/**
-	 * Aims the boss at the player
-	 */
-	IEnumerator Aim () {
-		yield return new WaitForSeconds (stopDelay);
+
+	void Update () {
 		GameObject player = GameObject.FindGameObjectWithTag ("Player");
-		while (true) {
-			targetRotation = Vector3.Angle(player.transform.position - transform.position, 
-			                               transform.forward);
-            yield return new WaitForSeconds(maneuverTime);
+		if (stopDelay <= 0) {
+			target = player.transform.position - transform.position;
+			Debug.Log(target);
 		}
 	}
 	
@@ -85,11 +80,10 @@ public class BossMover : MonoBehaviour
 			Mathf.Clamp(rigidbody.position.z, boundary.zMin, boundary.zMax)
 		);
 
-		float newRotation = Mathf.MoveTowardsAngle (transform.eulerAngles.y, targetRotation, 
-		                                            rotationSpeed * Time.deltaTime);
-		//Mathf.LerpAngle(rigidbody.rotation.y, targetRotation, Time.deltaTime)
-		rigidbody.rotation = Quaternion.Euler (0, rigidbody.rotation.y, 
-		                                       rigidbody.velocity.x * -tilt);
+		Vector3 newRotation = Vector3.RotateTowards (-transform.forward, target, 
+		                                            rotationSpeed * Time.deltaTime, 0.0f);
+		Debug.Log(newRotation);
+		transform.rotation = Quaternion.LookRotation (-target);
 	}
 	
 }
