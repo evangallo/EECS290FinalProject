@@ -12,6 +12,7 @@ public class BossWeapon : MonoBehaviour
 	public GameObject chargeEffect;
 	public GameObject beam;
 	public Transform beamSpawn;
+	public int shots;
 	public float chargeTime, beamTime, waitTime;
 	public float delay;
 
@@ -27,8 +28,10 @@ public class BossWeapon : MonoBehaviour
 			audio.Play ();
 			Instantiate (chargeEffect, beamSpawn.position, beamSpawn.rotation);
 			yield return new WaitForSeconds (chargeTime);
-			Instantiate (beam, beamSpawn.position, beamSpawn.rotation);
-			yield return new WaitForSeconds (beamTime);
+			for (int i = 0; i < shots; i++) {
+				Instantiate (beam, beamSpawn.position, beamSpawn.rotation);
+				yield return new WaitForSeconds (beamTime/shots);
+			}
 			yield return new WaitForSeconds (waitTime);
 		}
 	}
