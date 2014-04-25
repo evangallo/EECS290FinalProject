@@ -27,9 +27,11 @@ public class BossWeapon : MonoBehaviour
 		while (true) {
 			audio.Play ();
 			Instantiate (chargeEffect, beamSpawn.position, beamSpawn.rotation);
+			chargeEffect.transform.parent = transform;
 			yield return new WaitForSeconds (chargeTime);
 			for (int i = 0; i < shots; i++) {
 				Instantiate (beam, beamSpawn.position, beamSpawn.rotation);
+				beam.transform.parent = transform;
 				yield return new WaitForSeconds (beamTime/shots);
 			}
 			yield return new WaitForSeconds (waitTime);
