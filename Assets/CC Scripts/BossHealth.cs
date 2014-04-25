@@ -4,13 +4,13 @@ using System.Collections;
 public class BossHealth : MonoBehaviour {
 	public GameObject explosion;
 	public GameObject playerExplosion;
-    private int HP;
+    public int HP;
+
 	private Done_GameController gameController;
 
 	void Start ()
 	{
-        HP = 15;
-		GameObject gameControllerObject = GameObject.FindGameObjectWithTag ("GameController");
+        GameObject gameControllerObject = GameObject.FindGameObjectWithTag ("GameController");
 		if (gameControllerObject != null)
 		{
 			gameController = gameControllerObject.GetComponent <Done_GameController>();
