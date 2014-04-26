@@ -54,11 +54,14 @@ public class EvasiveManeuver : MonoBehaviour
 	{
 		float newManeuver = 0f;
 		if (threat == null) {
+			//use maneuver from Evade coroutine
 			newManeuver = Mathf.MoveTowards (rigidbody.velocity.x, targetManeuver, smoothing * Time.deltaTime);
 		} else {
+			//avoid incoming threat
 			float evasiveManeuver = dodge * Mathf.Sign(transform.position.x - threat.transform.position.x);
 			newManeuver = Mathf.MoveTowards (rigidbody.velocity.x, evasiveManeuver, smoothing * Time.deltaTime);
 		}
+
 		if (stopDelay > 0) {
 			rigidbody.velocity = new Vector3 (newManeuver, 0.0f, currentSpeed);
 			stopDelay -= Time.deltaTime;
@@ -77,6 +80,7 @@ public class EvasiveManeuver : MonoBehaviour
 
 	/**
 	 * Detects nearest object with player or hazard tag and returns its transform
+	 * This method is kinda inefficient.
 	 */
 	Transform detectNearestThreat () {
 		GameObject[] playerObjects = GameObject.FindGameObjectsWithTag ("Player");
@@ -100,7 +104,7 @@ public class EvasiveManeuver : MonoBehaviour
 			}
 		}
 
-		Debug.Log (nearestThreat.tag);
+		//Debug.Log (nearestThreat.tag);
 
 		if (distance < detectionRange) {
 			return nearestThreat.transform;
