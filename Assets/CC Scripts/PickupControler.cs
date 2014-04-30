@@ -1,0 +1,49 @@
+﻿using UnityEngine;
+using System.Collections;
+
+public class PickupControler : MonoBehaviour {
+
+	public string pickupType;
+	private Done_PlayerController playerController;
+	
+	void Start ()
+	{
+		GameObject playerControllerObject = GameObject.FindGameObjectWithTag ("Player");
+		
+		if (playerControllerObject != null)
+		{
+			playerController = playerControllerObject.GetComponent <Done_PlayerController>();
+		}
+		
+		if (playerController == null)
+		{
+			Debug.Log ("Cannot find 'PlayerController' script");
+		}
+	}
+	void OnTriggerEnter (Collider other)
+	{
+		if (other.tag == "Boundary")
+		{
+			Destroy(gameObject);
+		}
+		
+		if (other.tag == "Player" || other.tag == "Shield")
+		{
+			switch (pickupType) //select game mode coroutine
+			{
+			case "Rate Boost":
+				playerController.rateUpgrade();
+				break;
+				
+			case "Range Boost":
+				playerController.rangeUpgrade();
+				break;
+				
+			case "Shield":
+				playerController.generateShield();
+				break;
+			}
+			Destroy(gameObject);
+		}
+	}
+}

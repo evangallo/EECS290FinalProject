@@ -19,23 +19,64 @@ public class Done_PlayerController : MonoBehaviour
 	public float tilt;
 	public Done_Boundary boundary;
 
-	public GameObject shot;
+	public GameObject normalShot, rangeShot;
+	public float rangeUpTime, rateUpTime;
+	public GameObject shield;
 	public Transform shotSpawn;
-	public float fireRate;
-	 
+	public float baseFireRate, rateIncrease;
+
+	private float fireRate;
 	private float nextFire;
+	private bool rangeUp, rateUp;
+	private float rangeUpTimeLeft, rateUpTimeLeft;
+	private int bombs;
+
+	void Start () {
+		bombs = 0;
+		fireRate = baseFireRate;
+		rangeUp = false;
+		rateUp = false;
+		rangeUpTimeLeft = 0f;
+		rateUpTimeLeft = 0f;
+	}
 	
 	void Update ()
 	{
+		if (rangeUpTimeLeft > 0) {
+			rangeUp = true;
+			rangeUpTimeLeft -= Time.deltaTime;
+		} else {
+			rangeUp = false;
+		}
+		if (rateUpTimeLeft > 0) {
+			rateUp = true;
+			rateUpTimeLeft -= Time.deltaTime;
+		} else {
+			rateUp = false;
+		}
+
 		if (Input.GetButton("Fire1") && Time.time > nextFire) 
 		{
-			nextFire = Time.time + fireRate;
+			if (rateUp) {
+				fireRate = baseFireRate + rateIncrease;
+			} else {
+				fireRate = baseFireRate;
+			}
+			nextFire = Time.time + 1f / fireRate;
+
+			GameObject shot = null;
+			if (rangeUp) {
+				shot = rangeShot;
+			} else {
+				shot = normalShot;
+			}
 			Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
 			audio.Play ();
 		}
-        if (Input.GetButton("Fire2"))
+        if (Input.GetButton("Fire2") && bombs > 0)
         {
             Detonate();
+			bombs--;
         }
 	}
 
@@ -56,6 +97,7 @@ public class Done_PlayerController : MonoBehaviour
 		
 		rigidbody.rotation = Quaternion.Euler (0.0f, 0.0f, rigidbody.velocity.x * -tilt);
 	}
+
     void Detonate()
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
@@ -69,4 +111,19 @@ public class Done_PlayerController : MonoBehaviour
             victim.BroadcastMessage("Damage", SendMessageOptions.DontRequireReceiver);
         }
     }
+
+	 public void rangeUpgrade () {
+		rangeUpTimeLeft = rangeUpTime;
+	}
+
+	public void rateUpgrade () {
+		rateUpTimeLeft = rateUpTime;
+	}
+
+	public void generateShield () {
+		if (GameObject.FindGameObjectWithTag("Shield") == null) {
+			GameObject shieldClone = Instantiate(shield, transform.position, transform.rotation) as GameObject;
+			shieldClone.transform.parent = transform;
+		}
+	}
 }

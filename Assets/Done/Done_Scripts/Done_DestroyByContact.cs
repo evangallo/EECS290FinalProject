@@ -13,6 +13,7 @@ public class Done_DestroyByContact : MonoBehaviour
 	public GameObject playerExplosion;
 	public string objectType = "enemyShip"; //default to enemy ship
 	private Done_GameController gameController;
+	private PickupDropper pickupDropper;
 
 	void Start ()
 	{
@@ -27,11 +28,13 @@ public class Done_DestroyByContact : MonoBehaviour
 		{
 			Debug.Log ("Cannot find 'GameController' script");
 		}
+
+		pickupDropper = gameObject.GetComponent <PickupDropper> ();
 	}
 
 	void OnTriggerEnter (Collider other)
 	{
-		if (other.tag == "Boundary" || other.tag == "Enemy")
+		if (other.tag == "Boundary" || other.tag == "Enemy" || other.tag == "Pickup")
 		{
 			return;
 		}
@@ -55,6 +58,9 @@ public class Done_DestroyByContact : MonoBehaviour
         
 		gameController.AddScore (objectType);
 
+		if (pickupDropper != null) {
+			pickupDropper.drop();
+		}
         Destroy(gameObject);
     }
 
