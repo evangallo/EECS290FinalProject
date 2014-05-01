@@ -31,6 +31,7 @@ public class MainMenu : MonoBehaviour {
 		switch (this.tag)
 		{
 		case "Start": //Load game mode submenu
+			DontDestroyOnLoad(GameObject.FindGameObjectWithTag("Music"));
 			Application.LoadLevel (1);
 			break;
 		case "Quit": //Quit game
