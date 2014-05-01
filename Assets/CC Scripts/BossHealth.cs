@@ -23,19 +23,21 @@ public class BossHealth : MonoBehaviour {
 
 	void OnTriggerEnter (Collider other)
 	{
-		if (other.tag == "Boundary" || other.tag == "Enemy")
+		if (other.tag == "Boundary" || other.tag == "Enemy" || 
+		    (other.tag == "Player" && other.gameObject.GetComponent<Done_PlayerController> ().isInvincible()))
 		{
 			return;
 		}
-
-		if (other.tag == "Player")
+		
+		if (other.tag == "Player" && !other.gameObject.GetComponent<Done_PlayerController> ().isInvincible())
 		{
 			Instantiate(playerExplosion, other.transform.position, other.transform.rotation);
+			Destroy(other.gameObject);
 			gameController.GameOver();
 		}
-        Damage();
-
-        Destroy(other.gameObject);
+		
+		Damage();
+		Destroy(other.gameObject);
 	}
     void Damage()
     {

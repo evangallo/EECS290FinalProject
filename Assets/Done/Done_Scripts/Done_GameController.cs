@@ -23,12 +23,14 @@ public class Done_GameController : MonoBehaviour
 	public GUIText changeModeText;
 	public GUIText timerText;
 	public GUIText bombAmmoText;
+	public GUIText invText;
 
 	private float timer;
 	private bool isTiming;
 	private bool gameOver;
 	private int score;
 	private Done_GameController gameController;
+	private Done_PlayerController playerController;
 	
 	void Start ()
 	{
@@ -38,6 +40,7 @@ public class Done_GameController : MonoBehaviour
 		gameOverText.text = "";
 		changeModeText.text = "";
 		timerText.text = "";
+		invText.text = "";
 		score = 0;
 		UpdateScore ();
 		if (hazards.Length > 0) //Do not spawn hazards if there are none.
@@ -52,6 +55,16 @@ public class Done_GameController : MonoBehaviour
 		{
 			Debug.Log ("Cannot find 'GameController' script");
 		}
+
+		GameObject playerControllerObject = GameObject.FindGameObjectWithTag ("Player");
+		if (playerControllerObject != null)
+		{
+			playerController = playerControllerObject.GetComponent <Done_PlayerController>();
+		}
+		if (playerController == null)
+		{
+			Debug.Log ("Cannot find 'PlayerController' script");
+		}
 	}
 	
 	void Update ()
@@ -65,6 +78,11 @@ public class Done_GameController : MonoBehaviour
 
 		if (Input.GetKeyDown (KeyCode.Escape))
 			Application.Quit ();
+
+		if (playerController.isInvincible ())
+			invText.text = "Invincible";
+		else 
+			invText.text = "";
 
 		if (gameOver)
 		{
@@ -154,11 +172,11 @@ public class Done_GameController : MonoBehaviour
 			
 		case "time attack":
 			if (objectType == "enemyShip")
-				score += (int)(20f / timer) + 20;
+				score += (int)(20f - timer) + 20;
 			if (objectType == "asteroid")
-				score += (int)(10f / timer) + 10;
+				score += (int)(10f - timer) + 10;
 			if (objectType == "boss") 
-				score += (int)(50f / timer) + 50;
+				score += (int)(50f - timer) + 50;
 			break;
 			
 		case "challenge":

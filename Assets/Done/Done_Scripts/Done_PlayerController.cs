@@ -25,13 +25,16 @@ public class Done_PlayerController : MonoBehaviour
 	public Transform shotSpawn;
 	public float baseFireRate, rateIncrease;
 	public int bombCount;
+	public float invincibilityTime = 20f; //default is 20 seconds
 
+	private bool invincible;
 	private float fireRate;
 	private float nextFire;
 	private bool rangeUp, rateUp, bombKeyReady;
 	private float rangeUpTimeLeft, rateUpTimeLeft;
 	private int bombs;
 	private Done_GameController gameController;
+	private float timer;
 
 	void Start () {
 		gameController = GameObject.FindGameObjectWithTag ("GameController").GetComponent<Done_GameController>();
@@ -87,6 +90,12 @@ public class Done_PlayerController : MonoBehaviour
         }else if(!Input.GetButton("Fire2") && bombs > 0 && !bombKeyReady){
 			bombKeyReady = true;
 		}
+
+		if (invincible)
+			timer -= Time.deltaTime;
+		
+		if(timer <= 0)
+			invincible = false; 
 	}
 
 	void FixedUpdate ()
@@ -133,6 +142,25 @@ public class Done_PlayerController : MonoBehaviour
 		if (GameObject.FindGameObjectWithTag("Shield") == null) {
 			GameObject shieldClone = Instantiate(shield, transform.position, transform.rotation) as GameObject;
 			shieldClone.transform.parent = transform;
+		}
+	}
+
+	
+	public bool isInvincible(){
+		return invincible;
+	}
+	
+	public void SetPowerUp(string powerUp){
+		switch(powerUp){
+		case "Invincibility":
+			Debug.Log ("Set invincible");
+			timer = invincibilityTime;
+			invincible = true;
+			break;
+		case "FireRateIncrease":
+			Debug.Log ("Set fire rate increase");
+			fireRate -= .02f;
+			break;
 		}
 	}
 }
