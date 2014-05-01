@@ -24,6 +24,7 @@ public class Done_PlayerController : MonoBehaviour
 	public GameObject shield;
 	public Transform shotSpawn;
 	public float baseFireRate, rateIncrease;
+	public int bombCount;
 
 	private float fireRate;
 	private float nextFire;
@@ -32,7 +33,7 @@ public class Done_PlayerController : MonoBehaviour
 	private int bombs;
 
 	void Start () {
-		bombs = 0;
+		bombs = bombCount;
 		fireRate = baseFireRate;
 		rangeUp = false;
 		rateUp = false;
