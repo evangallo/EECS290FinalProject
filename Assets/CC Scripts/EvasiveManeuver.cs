@@ -87,26 +87,17 @@ public class EvasiveManeuver : MonoBehaviour
 	}
 
 	/**
-	 * Detects nearest object with player or hazard tag and returns its transform
+	 * Detects nearest object behind the enemy with hazard tag and returns its transform
 	 * This method is kinda inefficient.
 	 */
 	Transform detectNearestThreat () {
-		GameObject[] playerObjects = GameObject.FindGameObjectsWithTag ("Player");
 		GameObject[] hazards = GameObject.FindGameObjectsWithTag ("Hazard");
 		float distance = Mathf.Infinity;
 		GameObject nearestThreat = null;
 
-		foreach (GameObject playerObject in playerObjects) {
-			float difference = Vector3.Magnitude(transform.position - playerObject.transform.position);
-			if (difference < distance) {
-				distance = difference;
-				nearestThreat = playerObject;
-			}
-		}
-
 		foreach (GameObject hazard in hazards) {
 			float difference = Vector3.Magnitude(transform.position - hazard.transform.position);
-			if (difference < distance) {
+			if (difference < distance && transform.position.z < hazard.transform.position.z) {
 				distance = difference;
 				nearestThreat = hazard;
 			}
