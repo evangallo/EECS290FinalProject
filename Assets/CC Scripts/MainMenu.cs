@@ -16,11 +16,13 @@ public class MainMenu : MonoBehaviour {
 	/**
 	 * Check if directions menu should load.
 	 */
-	void FixedUpdate() {
+	void Update() {
 
 		//Press Tab to load directions menu
-		if (Input.GetKeyDown (KeyCode.Tab))
+		if (Input.GetKeyDown (KeyCode.Tab)) {
+			DontDestroyOnLoad (GameObject.FindGameObjectWithTag ("Music"));
 			Application.LoadLevel (6);
+		}
 	}
 	
 	/**
