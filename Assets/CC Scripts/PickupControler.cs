@@ -34,7 +34,7 @@ public class PickupControler : MonoBehaviour {
 			Destroy(gameObject);
 		}
 
-		Debug.Log ("Collision detected");
+		//Debug.Log ("Collision detected");
 		
 		if (other.tag == "Player" || other.tag == "Shield")
 		{
