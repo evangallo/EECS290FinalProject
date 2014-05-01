@@ -40,7 +40,15 @@ public class EvasiveManeuver : MonoBehaviour
 		while (true)
 		{
 			yield return new WaitForSeconds (Random.Range (maneuverWait.x, maneuverWait.y));
-			targetManeuver = Random.Range (1, dodge) * Mathf.Sign (Random.Range(-1, 1));
+			float sign = 0;
+			if (transform.position.x > boundary.xMax * .8) {
+				sign = -1;
+			} else if (transform.position.x < boundary.xMin * .8) {
+				sign = 1;
+			} else {
+				sign = Mathf.Sign (Random.Range(-1, 1));
+			}
+			targetManeuver = Random.Range (1, dodge) * sign;
 			yield return new WaitForSeconds (Random.Range (maneuverTime.x, maneuverTime.y));
 			targetManeuver = 0;
 		}

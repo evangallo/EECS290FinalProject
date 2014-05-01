@@ -7,7 +7,7 @@ public class PickupDropper : MonoBehaviour {
 	public float dropChance;
 
 	public void drop () {
-		if (Random.Range(0,1) < dropChance) {
+		if (Random.value < dropChance) {
 			Instantiate(pickups[Mathf.FloorToInt(Random.Range(0,pickups.Length))],
 			            transform.position, transform.rotation);
 		}

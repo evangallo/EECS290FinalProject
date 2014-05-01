@@ -36,7 +36,7 @@ public class PickupControler : MonoBehaviour {
 		
 		if (other.tag == "Player" || other.tag == "Shield")
 		{
-			switch (pickupType) //select game mode coroutine
+			switch (pickupType)
 			{
 			case "Rate Boost":
 				playerController.rateUpgrade();
@@ -50,6 +50,7 @@ public class PickupControler : MonoBehaviour {
 				playerController.generateShield();
 				break;
 			}
+
 			Destroy(gameObject);
 		}
 	}
