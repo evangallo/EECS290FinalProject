@@ -22,6 +22,7 @@ public class Done_GameController : MonoBehaviour
 	public GUIText gameOverText;
 	public GUIText changeModeText;
 	public GUIText timerText;
+	public GUIText bombAmmoText;
 
 	private float timer;
 	private bool isTiming;
@@ -37,6 +38,7 @@ public class Done_GameController : MonoBehaviour
 		gameOverText.text = "";
 		changeModeText.text = "";
 		timerText.text = "";
+		bombAmmoText.text = "Bombs: 0";
 		score = 0;
 		UpdateScore ();
 		if (hazards.Length > 0) //Do not spawn hazards if there are none.
@@ -192,6 +194,10 @@ public class Done_GameController : MonoBehaviour
 	{
 		gameOverText.text = "Game Over!";
 		gameOver = true;
+	}
+
+	public void SetBombText(int newBombCount){
+		bombAmmoText.text = "Bombs: " + newBombCount;
 	}
 
     public void Victory()

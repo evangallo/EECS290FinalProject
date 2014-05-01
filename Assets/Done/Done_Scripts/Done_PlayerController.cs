@@ -28,15 +28,19 @@ public class Done_PlayerController : MonoBehaviour
 
 	private float fireRate;
 	private float nextFire;
-	private bool rangeUp, rateUp;
+	private bool rangeUp, rateUp, bombKeyReady;
 	private float rangeUpTimeLeft, rateUpTimeLeft;
 	private int bombs;
+	private Done_GameController gameController;
 
 	void Start () {
+		gameController = GameObject.FindGameObjectWithTag ("GameController").GetComponent<Done_GameController>();
 		bombs = bombCount;
+		gameController.SetBombText(bombs);
 		fireRate = baseFireRate;
 		rangeUp = false;
 		rateUp = false;
+		bombKeyReady = true;
 		rangeUpTimeLeft = 0f;
 		rateUpTimeLeft = 0f;
 	}
@@ -74,11 +78,15 @@ public class Done_PlayerController : MonoBehaviour
 			Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
 			audio.Play ();
 		}
-        if (Input.GetButton("Fire2") && bombs > 0)
+        if (Input.GetButton("Fire2") && bombs > 0 && bombKeyReady)
         {
+			bombKeyReady = false;
             Detonate();
 			bombs--;
-        }
+			gameController.SetBombText(bombs);
+        }else if(!Input.GetButton("Fire2") && bombs > 0 && !bombKeyReady){
+			bombKeyReady = true;
+		}
 	}
 
 	void FixedUpdate ()

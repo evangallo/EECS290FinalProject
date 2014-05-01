@@ -52,8 +52,6 @@ public class GameController : MonoBehaviour
 			changeModeText.text = "Press 'M' for Mode Selection";
 		}
 	}
-
-		
 	
 	public void AddScore (int newScoreValue)
 	{
