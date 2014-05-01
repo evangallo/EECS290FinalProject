@@ -4,6 +4,8 @@ using System.Collections;
 public class PickupControler : MonoBehaviour {
 
 	public string pickupType;
+	public float velocity;
+
 	private Done_PlayerController playerController;
 	
 	void Start ()
@@ -20,6 +22,11 @@ public class PickupControler : MonoBehaviour {
 			Debug.Log ("Cannot find 'PlayerController' script");
 		}
 	}
+
+	void Update() {
+		transform.Translate (0f, 0f, velocity * Time.deltaTime);
+	}
+
 	void OnTriggerEnter (Collider other)
 	{
 		if (other.tag == "Boundary")
