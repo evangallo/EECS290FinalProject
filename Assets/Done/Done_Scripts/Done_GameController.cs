@@ -38,7 +38,6 @@ public class Done_GameController : MonoBehaviour
 		gameOverText.text = "";
 		changeModeText.text = "";
 		timerText.text = "";
-		bombAmmoText.text = "Bombs: 0";
 		score = 0;
 		UpdateScore ();
 		if (hazards.Length > 0) //Do not spawn hazards if there are none.
