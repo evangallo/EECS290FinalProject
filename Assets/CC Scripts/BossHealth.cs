@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/**
+ * Boss health for Cosmos Commander Final Project.
+ * Controls the boss health in the game.
+ * 
+ * @authors EECS 290 Team 2
+ */
 public class BossHealth : MonoBehaviour {
 	public GameObject explosion;
 	public GameObject playerExplosion;

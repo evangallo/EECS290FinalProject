@@ -5,8 +5,6 @@ using System.Collections;
  * Evasive Maneuver Controller for Cosmos Commander Final Project.
  * Controls the maneuvers of the enemies in the game.
  * 
- * Right now, dodgeing is random, we need them to be able to dodge asteroids and 
- * not run into each other
  * @authors EECS 290 Team 2
  */
 public class EvasiveManeuver : MonoBehaviour

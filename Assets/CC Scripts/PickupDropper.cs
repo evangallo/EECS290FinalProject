@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/**
+ * Pickup dropper for Cosmos Commander Final Project.
+ * Controls the pickup drops in the game.
+ * 
+ * @authors EECS 290 Team 2
+ */
 public class PickupDropper : MonoBehaviour {
 
 	public GameObject[] pickups;

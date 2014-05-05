@@ -36,7 +36,7 @@ public class Done_DestroyByContact : MonoBehaviour
 	{
 		if (other.tag == "Boundary" || other.tag == "Enemy" || 
 		    (other.tag == "Player" && other.gameObject.GetComponent<Done_PlayerController> ().isInvincible())
-		    || other.tag == "Pickup")
+		    || other.tag == "Pickup" || other.tag == "Invincibility" || other.tag == "FireRateIncrease")
 		{
 			return;
 		}

@@ -3,7 +3,7 @@ using System.Collections;
 
 /**
  * Power up manager for Cosmos Commander Final Project.
- * Controls the power up obtained in the game.
+ * Controls the power ups obtained in the game.
  * 
  * @authors EECS 290 Team 2
  */

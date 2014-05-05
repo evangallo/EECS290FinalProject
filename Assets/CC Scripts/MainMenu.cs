@@ -21,6 +21,9 @@ public class MainMenu : MonoBehaviour {
 		//Press Tab to load directions menu
 		if (Input.GetKeyDown (KeyCode.Tab))
 			Application.LoadLevel (6);
+		//Press F1 to load pickup menu
+		if (Input.GetKeyDown (KeyCode.F1))
+			Application.LoadLevel (7);
 	}
 	
 	/**

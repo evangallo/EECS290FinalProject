@@ -1,6 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
+/**
+ * Weapon range manager for Cosmos Commander Final Project.
+ * Controls the range of the player's weapon in the game.
+ * 
+ * @authors EECS 290 Team 2
+ */
 public class WeaponRange : MonoBehaviour {
 
 	public float range;

@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/**
+ * Pickup controller for Cosmos Commander Final Project.
+ * Controls the pickups in the game.
+ * 
+ * @authors EECS 290 Team 2
+ */
 public class PickupControler : MonoBehaviour {
 
 	public string pickupType;

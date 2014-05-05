@@ -25,7 +25,7 @@ public class Done_PlayerController : MonoBehaviour
 	public Transform shotSpawn;
 	public float baseFireRate, rateIncrease;
 	public int bombCount;
-	public float invincibilityTime = 20f; //default is 20 seconds
+	public float invincibilityTime = 3f; //default is 3 seconds
 
 	private bool invincible;
 	private float fireRate;
@@ -159,7 +159,7 @@ public class Done_PlayerController : MonoBehaviour
 			break;
 		case "FireRateIncrease":
 			Debug.Log ("Set fire rate increase");
-			fireRate -= .02f;
+			baseFireRate += .5f;
 			break;
 		}
 	}
